@@ -3,7 +3,7 @@
     "ProductivityTools.TrainingLog.SportsTracker": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
-      "commandLineArgs": "-noexit -command \"import-module D:\\github\\ProductivityTools.TrainingLog.SportsTracker\\ProductivityTools.TrainingLog.SportsTracker\\bin\\Debug\\netstandard2.0\\ProductivityTools.TrainingLog.SportsTracker.dll\""
+      "commandLineArgs": "-noexit -command \"import-module  .\\ProductivityTools.TrainingLog.SportsTracker.Cmdlet.dll\""
     }
   }
 }

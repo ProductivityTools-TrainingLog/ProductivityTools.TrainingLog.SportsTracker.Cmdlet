@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ExportTrainingsToSportsTracker.Commands;
+using System;
 using System.Management.Automation;
 
 namespace ProductivityTools.TrainingLog.SportsTracker
@@ -9,6 +10,8 @@ namespace ProductivityTools.TrainingLog.SportsTracker
         protected override void ProcessRecord()
         {
             WriteVerbose("Hello from Export-TrainingsToSportTracker");
+            base.AddCommand(new Default(this));
+            base.ProcessCommands();
             base.ProcessRecord();
         }
     }
