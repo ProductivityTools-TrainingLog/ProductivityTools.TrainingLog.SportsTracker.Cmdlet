@@ -16,19 +16,23 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
         public void ExportTraingsToSportTracker()
         {
-            GetTrainingsFromTrainingLog();
+            var trinings=GetTrainingsFromTrainingLog();
+            foreach(var training in trinings)
+            {
+                PushTrainingsToSportsTracker(training);
+            }
         }
 
-        private void GetTrainingsFromTrainingLog()
+        private List<Training> GetTrainingsFromTrainingLog()
         {
             HttpPostClient client = new HttpPostClient(true);
             client.SetBaseUrl(this.TrainingLogApiAddress);
 
-            List<Training> result2 = client.PostAsync<List<Training>>("Training", "Get", "pwujczyk" ).Result;
-            Console.WriteLine(result2);
+            List<Training> result2 = client.PostAsync<List<Training>>("Training", "List", "pwujczyk" ).Result;
+            return result2;
         }
 
-        private void PushTrainingsToSportsTracker()
+        private void PushTrainingsToSportsTracker(Training training)
         {
 
         }
