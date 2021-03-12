@@ -26,8 +26,8 @@ namespace ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ExportTrainingsToSp
             var r = configuration["login"];
 
             this.Cmdlet.WriteOutput("Hello Default ");
-            Application application = new Application("https://localhost:5001");
-            application.ExportTrainingsToSportTracker(configuration["login"],configuration["password"]);
+            Application application = new Application("https://localhost:5001", configuration["login"], configuration["password"]);
+            application.ExportTrainingsToSportTracker();
         }
     }
 }

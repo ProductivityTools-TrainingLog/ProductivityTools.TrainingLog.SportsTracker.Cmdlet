@@ -44,9 +44,9 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         }
 
 
-        public void ExportTrainingsToSportTracker(string login, string password)
+        public void ExportTrainingsToSportTracker()
         {
-            var sportsTrackingTrainings = GetSportsTrackerTrainings(login, password);
+            var sportsTrackingTrainings = GetSportsTrackerTrainings();
 
             var trinings = GetTrainingsFromTrainingLog();
             foreach (var training in trinings)
@@ -54,7 +54,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
                 if (!sportsTrackingTrainings.Any(x => training.ExternalIdList.ContainsKey("SportsTracker") && x.WorkoutKey == training.ExternalIdList["SportsTracker"]))
                 {
                     var trainingDetails = GetTrainingsDetailsFromTrainingLog(training.TrainingId);
-                    PushTrainingsToSportsTracker(training);
+                    PushTrainingsToSportsTracker(trainingDetails);
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             return result2;
         }
 
-        private List<ProductivityTools.SportsTracker.SDK.Model.Training> GetSportsTrackerTrainings(string login, string password)
+        private List<ProductivityTools.SportsTracker.SDK.Model.Training> GetSportsTrackerTrainings()
         {
             var trainings = SportTracker.GetTrainingList();
             return trainings;
@@ -89,6 +89,11 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             sdkTraining.EnergyConsumption = Convert.ToInt32(training.Calories);
             sdkTraining.SharingFlags = 19;
 
+            if (training.TrainingId != 1196)
+            {
+                var result = this.SportTracker.AddTraining(sdkTraining, training.Gpx, training.Pictures);
+            }
+
         }
 
         private ProductivityTools.SportsTracker.SDK.Model.TrainingType GetTraining(ProductivityTools.TrainingLog.Contract.TrainingType tlSportsType)
@@ -97,7 +102,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
             //dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.NotKnown, ProductivityTools.SportsTracker.SDK.Model.TrainingType.
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Aerobics, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Areobics));
-            dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Badminton, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Badminton));    
+            dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Badminton, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Badminton));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Climbing, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Climbing));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Cycling, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Cycling));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.MountainBiking, ProductivityTools.SportsTracker.SDK.Model.TrainingType.MountainBiking));
@@ -135,12 +140,15 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Fitness, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Fitness));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.HulaHop, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Fitness, "#HulaHop"));
-            dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.StairClimbing, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Other1, "#StairClimbing"))
+            dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.StairClimbing, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Other1, "#StairClimbing"));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Bilard, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Other2, "#Bilard"));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Sleed, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Other3, "#Sleed"));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.RopeJumping, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Fitness, "#RopeJumping"));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Pilates, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Yoga));
-            return ProductivityTools.SportsTracker.SDK.Model.TrainingType.Fitness;
+
+            var r=dict.Single(x => x.TrainingLogTrainingType == tlSportsType);
+
+            return r.SportsTrackerTrainingType;
         }
     }
 }

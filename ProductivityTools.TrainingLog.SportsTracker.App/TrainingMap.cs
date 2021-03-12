@@ -26,7 +26,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
           
            ProductivityTools.TrainingLog.Contract.TrainingType trainingLogTrainingType,
              ProductivityTools.SportsTracker.SDK.Model.TrainingType sportsTrackerTrainingType
-           ) : this(trainingLogTrainingType, sportsTrackerTrainingType, string.Empty) { }
+           ) : this(trainingLogTrainingType, sportsTrackerTrainingType , string.Empty) { }
     }
 
 }

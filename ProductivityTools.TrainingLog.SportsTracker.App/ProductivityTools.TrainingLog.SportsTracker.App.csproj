@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="ProductivityTools.SimpleHttpPostClient" Version="2.0.2" />
-    <PackageReference Include="ProductivityTools.SportsTracker.SDK" Version="0.0.15" />
-    <PackageReference Include="ProductivityTools.TrainingLog.Contract" Version="0.0.12" />
+    <PackageReference Include="ProductivityTools.SportsTracker.SDK" Version="0.0.18" />
+    <PackageReference Include="ProductivityTools.TrainingLog.Contract" Version="0.0.13" />
   </ItemGroup>
 
 </Project>
