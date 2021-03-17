@@ -89,10 +89,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             sdkTraining.EnergyConsumption = Convert.ToInt32(training.Calories);
             sdkTraining.SharingFlags = 19;
 
-            if (training.TrainingId != 1196)
-            {
-                var result = this.SportTracker.AddTraining(sdkTraining, training.Gpx, training.Pictures);
-            }
+            var result = this.SportTracker.AddTraining(sdkTraining, training.Gpx, training.Pictures);
 
         }
 
@@ -146,7 +143,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.RopeJumping, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Fitness, "#RopeJumping"));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Pilates, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Yoga));
 
-            var r=dict.Single(x => x.TrainingLogTrainingType == tlSportsType);
+            var r = dict.Single(x => x.TrainingLogTrainingType == tlSportsType);
 
             return r.SportsTrackerTrainingType;
         }
