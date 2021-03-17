@@ -15,17 +15,15 @@
 PowerShell module allows to import trainings from TrainingLog to SportsTracker website
 
 <!--more-->
-It exposes following commands
+It exposes following commands (TO BE CORECTED, more parameters needed)
  ```powershell
-
+Export-TrainingsToSportTracker -Verbose 
 ```
 Login and Password can be provided with [PowerShell Master Configuration](http://productivitytools.tech/powershell-master-configuration/) or parameter.
 
 ## Example
 ```powershell
-Add-Training -TrainingType AlpineSkiing -Description "description" -Duration 20 -Date "2020.02.26" -Time "08:09" -Distance 69
 
-Add-Training -TrainingType AlpineSkiing -Description "description" -Duration 20 -Date "2020.02.26" -Time "08:09" -Distance 69 -Login pawel@pawel.pl -Password "fdsa" -Verbose
 ```
  
  ![Cmdlet Example](Images/TrainingCmdlet.png)
