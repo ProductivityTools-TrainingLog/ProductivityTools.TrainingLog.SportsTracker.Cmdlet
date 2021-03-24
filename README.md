@@ -16,19 +16,28 @@ PowerShell module allows to import trainings from TrainingLog to SportsTracker w
 
 <!--more-->
 It exposes following commands (TO BE CORECTED, more parameters needed)
+
  ```powershell
-Export-TrainingsToSportTracker -Verbose 
+Export-TrainingsToSportTracker -Verbose -Login "login" -Password "password" -Account "account" -TrainingLogApiAddress "http:\\example\"
 ```
+Command can take parameters from master configuration. 
+
+```json
+{
+  "login": "pwujczyk@gmail.com",
+  "password": "my secret password",
+  "trainingLogApiAddress":"https://localhost:5001"
+}
+
+```
+
 Login and Password can be provided with [PowerShell Master Configuration](http://productivitytools.tech/powershell-master-configuration/) or parameter.
 
 ## Example
 ```powershell
-
+Export-TrainingsToSportTracker -Verbose -Account pwujczyk
 ```
  
- ![Cmdlet Example](Images/TrainingCmdlet.png)
-
- After adding training through module we can see it in the portal.
 
  <!--og-image-->
  ![Example](Images/TrainingAdded.png)
