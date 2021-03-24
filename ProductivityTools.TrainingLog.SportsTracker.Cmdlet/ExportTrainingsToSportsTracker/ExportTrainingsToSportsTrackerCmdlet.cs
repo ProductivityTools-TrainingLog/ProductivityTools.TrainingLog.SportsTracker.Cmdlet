@@ -7,6 +7,18 @@ namespace ProductivityTools.TrainingLog.SportsTracker
     [Cmdlet("Export","TrainingsToSportTracker")]
     public class ExportTrainingsToSportsTrackerCmdlet : ProductivityTools.PSCmdlet.PSCmdletPT
     {
+        [Parameter(Mandatory = false, HelpMessage = "Login to SportsTracker website")]
+        public string Login { get; set; }
+
+        [Parameter(Mandatory = false, HelpMessage = "Password to SportsTracker website")]
+        public string Password { get; set; }
+
+        [Parameter(Mandatory = false, HelpMessage = "Account from TrainingLog application")]
+        public string Account { get; set; }
+
+        [Parameter(Mandatory = false, HelpMessage = "TrainingLog API address")]
+        public string TrainingLogApiAddress { get; set; }
+
         protected override void ProcessRecord()
         {
             WriteVerbose("Hello from Export-TrainingsToSportTracker");

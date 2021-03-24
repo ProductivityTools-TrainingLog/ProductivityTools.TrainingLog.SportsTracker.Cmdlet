@@ -44,24 +44,25 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         }
 
 
-        public void ExportTrainingsToSportTracker()
+        public void ExportTrainingsToSportTracker(string account)
         {
             var sportsTrackingTrainings = GetSportsTrackerTrainings();
 
-            var trinings = GetTrainingsFromTrainingLog();
+            var trinings = GetTrainingsFromTrainingLog(account);
             foreach (var training in trinings)
             {
                 if (!sportsTrackingTrainings.Any(x => training.ExternalIdList.ContainsKey("SportsTracker") && x.WorkoutKey == training.ExternalIdList["SportsTracker"]))
                 {
                     var trainingDetails = GetTrainingsDetailsFromTrainingLog(training.TrainingId);
-                    PushTrainingsToSportsTracker(trainingDetails);
+                    var externalTrainingId = PushTrainingsToSportsTracker(trainingDetails);
+                    UpdateExternalTrainingId(training.TrainingId, externalTrainingId);
                 }
             }
         }
 
-        private List<Training> GetTrainingsFromTrainingLog()
+        private List<Training> GetTrainingsFromTrainingLog(string account)
         {
-            List<Training> result2 = HttpPostClient.PostAsync<List<Training>>("Training", "List", "pwujczyk").Result;
+            List<Training> result2 = HttpPostClient.PostAsync<List<Training>>("Training", "List", account).Result;
             return result2;
         }
 
@@ -78,7 +79,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             return trainings;
         }
 
-        private void PushTrainingsToSportsTracker(Training training)
+        private string PushTrainingsToSportsTracker(Training training)
         {
             ProductivityTools.SportsTracker.SDK.Model.Training sdkTraining = new ProductivityTools.SportsTracker.SDK.Model.Training();
             sdkTraining.StartDate = training.Start;
@@ -90,6 +91,13 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             sdkTraining.SharingFlags = 19;
 
             var result = this.SportTracker.AddTraining(sdkTraining, training.Gpx, training.Pictures);
+            return result;
+        }
+
+        private void UpdateExternalTrainingId(int trainingId, string externalTrainingId)
+        {
+            string address = string.Format($"UpdateExternalTrainingId/?trainingId={trainingId}&externalTrainingId={externalTrainingId}&externalSystemName=SportsTracker");
+            object result2 = HttpPostClient.PostAsync<object>("Training", address, null).Result;
 
         }
 
