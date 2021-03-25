@@ -84,9 +84,10 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             ProductivityTools.SportsTracker.SDK.Model.Training sdkTraining = new ProductivityTools.SportsTracker.SDK.Model.Training();
             sdkTraining.StartDate = training.Start;
             sdkTraining.Distance = decimal.ToDouble(training.Distance);
-            sdkTraining.TrainingType = GetTraining(training.Sport);
+            var trainingMap=GetTraining(training.Sport);
+            sdkTraining.TrainingType = trainingMap.SportsTrackerTrainingType;
             sdkTraining.Duration = TimeSpan.FromSeconds(training.Duration);
-            sdkTraining.Description = training.Name;
+            sdkTraining.Description = $"{trainingMap.Name} {training.Name}";
             sdkTraining.EnergyConsumption = Convert.ToInt32(training.Calories);
             sdkTraining.SharingFlags = 19;
 
@@ -101,7 +102,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
         }
 
-        private ProductivityTools.SportsTracker.SDK.Model.TrainingType GetTraining(ProductivityTools.TrainingLog.Contract.TrainingType tlSportsType)
+        private TrainingMap GetTraining(ProductivityTools.TrainingLog.Contract.TrainingType tlSportsType)
         {
             var dict = new List<TrainingMap>();
 
@@ -153,7 +154,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
             var r = dict.Single(x => x.TrainingLogTrainingType == tlSportsType);
 
-            return r.SportsTrackerTrainingType;
+            return r;
         }
     }
 }
