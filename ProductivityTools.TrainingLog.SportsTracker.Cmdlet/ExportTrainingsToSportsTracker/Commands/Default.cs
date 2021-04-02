@@ -16,18 +16,14 @@ namespace ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ExportTrainingsToSp
 
         protected override bool Condition => true;
 
+
+
         protected override void Invoke()
         {
-
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .AddMasterConfiguration(true)
-                .Build();
-
-
-            string login = this.Cmdlet.Login ?? configuration["login"];
-            string password = this.Cmdlet.Password ?? configuration["password"];
-            string trainingLogApiAddress = this.Cmdlet.TrainingLogApiAddress ?? configuration["trainingLogApiAddress"];
-            string account = this.Cmdlet.Account ?? configuration["account"];
+            string login = this.Cmdlet.Login ?? Login;
+            string password = this.Cmdlet.Password ?? Password;
+            string trainingLogApiAddress = this.Cmdlet.TrainingLogApiAddress ?? TrainingLogApiAddress;
+            string account = this.Cmdlet.Account ?? Account;
 
             ValidateEmpty(login, password, trainingLogApiAddress, account);
             this.Cmdlet.WriteOutput("Hello Default ");
