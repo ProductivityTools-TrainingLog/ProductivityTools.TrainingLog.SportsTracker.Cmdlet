@@ -106,7 +106,6 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         {
             var dict = new List<TrainingMap>();
 
-            //dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.NotKnown, ProductivityTools.SportsTracker.SDK.Model.TrainingType.
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Aerobics, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Areobics));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Badminton, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Badminton));
             dict.Add(new TrainingMap(ProductivityTools.TrainingLog.Contract.TrainingType.Climbing, ProductivityTools.SportsTracker.SDK.Model.TrainingType.Climbing));

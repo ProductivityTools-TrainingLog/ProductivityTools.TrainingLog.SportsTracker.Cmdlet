@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ExportTrainingsToSportsTracker.Commands
 {
-    public class Default : PSCmdlet.PSCommandPT<ExportTrainingsToSportsTrackerCmdlet>
+    public class Default : BaseCommand<ExportTrainingsToSportsTrackerCmdlet>
     {
         public Default(ExportTrainingsToSportsTrackerCmdlet cmdletType) : base(cmdletType)
         {
