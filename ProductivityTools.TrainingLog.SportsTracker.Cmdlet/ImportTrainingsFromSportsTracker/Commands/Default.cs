@@ -15,7 +15,12 @@ namespace ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ImportTrainingsFrom
 
         protected override void Invoke()
         {
-            throw new NotImplementedException();
+            string login = this.Cmdlet.Login ?? Login;
+            string password = this.Cmdlet.Password ?? Password;
+            string trainingLogApiAddress = this.Cmdlet.TrainingLogApiAddress ?? TrainingLogApiAddress;
+            string account = this.Cmdlet.Account ?? Account;
+
+            ValidateEmpty(login, password, trainingLogApiAddress, account);
         }
     }
 }

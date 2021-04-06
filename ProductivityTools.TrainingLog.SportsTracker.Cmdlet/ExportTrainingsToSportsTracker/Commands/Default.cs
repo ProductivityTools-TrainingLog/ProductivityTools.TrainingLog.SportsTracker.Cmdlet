@@ -31,20 +31,5 @@ namespace ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ExportTrainingsToSp
             application.ExportTrainingsToSportTracker(account);
         }
 
-        private void ValidateEmpty(params string[] s)
-        {
-            foreach (var s1 in s)
-            {
-                ValidateEmpty(s1);
-            }
-        }
-
-        private void ValidateEmpty(string s)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                throw new Exception("Some parameter hadn't been provided, please provide parameters or update master configuration");
-            }
-        }
     }
 }
