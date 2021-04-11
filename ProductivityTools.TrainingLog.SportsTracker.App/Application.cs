@@ -8,9 +8,9 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 {
     public class Application
     {
-        private readonly string TrainingLogApiAddress;
-        private readonly string Login;
-        private readonly string Password;
+        //private readonly string TrainingLogApiAddress;
+        //private readonly string Login;
+        //private readonly string Password;
 
         private SportsTracker SportsTracker;
         private TrainingLog TrainingLog;
@@ -25,23 +25,24 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         }
 
 
-        private HttpPostClient HttpPostClient
-        {
-            get
-            {
-                HttpPostClient client = new HttpPostClient(true);
-                client.SetBaseUrl(this.TrainingLogApiAddress);
-                return client;
-            }
-        }
+        //private HttpPostClient HttpPostClient
+        //{
+        //    get
+        //    {
+        //        HttpPostClient client = new HttpPostClient(true);
+        //        client.SetBaseUrl(this.TrainingLogApiAddress);
+        //        return client;
+        //    }
+        //}
 
 
         public void ExportTrainingsToSportTracker(string account)
         {
             var sportsTrackingTrainings = this.SportsTracker.GetSportsTrackerTrainings();
+            var trainingLogTrainings = this.TrainingLog.GetTrainingsFromTrainingLog(account);
 
-            var trinings = this.TrainingLog.GetTrainingsFromTrainingLog(account);
-            foreach (var training in trinings)
+
+            foreach (var training in trainingLogTrainings)
             {
                 if (!sportsTrackingTrainings.Any(x => training.ExternalIdList.ContainsKey("SportsTracker") && x.WorkoutKey == training.ExternalIdList["SportsTracker"]))
                 {
@@ -54,7 +55,22 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
         public void ImportTrainingsFromSportTracker(string account)
         {
-        
+            var sportsTrackingTrainings = this.SportsTracker.GetSportsTrackerTrainings();
+            var trainingLogTrainings = this.TrainingLog.GetTrainingsFromTrainingLog(account);
+
+            foreach(var sportsTrackingTraining in sportsTrackingTrainings)
+            {
+                if (trainingLogTrainings.Any(x=>x.ExternalIdList.ContainsKey("SportsTracker") && x.ExternalIdList["SportsTracker"]==sportsTrackingTraining.WorkoutKey))
+                {
+                    Console.WriteLine("Training exists");
+                }
+                else
+                {
+                    Console.WriteLine("Training missing");
+
+                }
+            }
+
         }
     }
 }

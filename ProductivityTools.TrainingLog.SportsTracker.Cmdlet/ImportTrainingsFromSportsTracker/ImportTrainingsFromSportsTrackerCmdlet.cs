@@ -9,7 +9,6 @@ namespace ProductivityTools.TrainingLog.SportsTracker.ImportTrainingsFromSportsT
     [Cmdlet("Import", "TrainingsFromSportTracker")]
     public class ImportTrainingsFromSportsTrackerCmdlet : ProductivityTools.PSCmdlet.PSCmdletPT
     {
-
         [Parameter(Mandatory = false, HelpMessage = "Login to SportsTracker website")]
         public string Login { get; set; }
 
@@ -27,6 +26,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.ImportTrainingsFromSportsT
         {
             WriteVerbose("Hello from Import-TrainingsToSportTracker");
             base.AddCommand(new Default(this));
+            base.ProcessCommands();
             base.ProcessRecord();
         }
     }

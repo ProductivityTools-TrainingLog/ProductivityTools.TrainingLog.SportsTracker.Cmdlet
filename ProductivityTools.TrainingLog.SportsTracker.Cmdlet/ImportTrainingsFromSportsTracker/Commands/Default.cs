@@ -1,4 +1,5 @@
-﻿using ProductivityTools.TrainingLog.SportsTracker.ImportTrainingsFromSportsTracker;
+﻿using ProductivityTools.TrainingLog.SportsTracker.App;
+using ProductivityTools.TrainingLog.SportsTracker.ImportTrainingsFromSportsTracker;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +21,16 @@ namespace ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ImportTrainingsFrom
             string trainingLogApiAddress = this.Cmdlet.TrainingLogApiAddress ?? TrainingLogApiAddress;
             string account = this.Cmdlet.Account ?? Account;
 
+            this.Cmdlet.WriteVerbose($"Login: {login}");
+            this.Cmdlet.WriteVerbose($"Password: {password}");
+            this.Cmdlet.WriteVerbose($"TrainingLogApiAddress: {trainingLogApiAddress}");
+            this.Cmdlet.WriteVerbose($"Account: {account}");
+
+
             ValidateEmpty(login, password, trainingLogApiAddress, account);
+
+            Application application = new Application(trainingLogApiAddress, login, password);
+            application.ImportTrainingsFromSportTracker(account);
         }
     }
 }
