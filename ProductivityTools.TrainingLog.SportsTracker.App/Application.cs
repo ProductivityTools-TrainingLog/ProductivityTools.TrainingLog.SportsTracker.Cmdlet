@@ -66,7 +66,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
                 }
                 else
                 {
-                    Console.WriteLine("Training missing");
+                    this.TrainingLog.AddTraining(sportsTrackingTraining, account);
 
                 }
             }
