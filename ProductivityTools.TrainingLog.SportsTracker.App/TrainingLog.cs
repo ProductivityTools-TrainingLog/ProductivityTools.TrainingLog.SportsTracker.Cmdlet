@@ -22,8 +22,10 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
         public List<Training> GetTrainingsFromTrainingLog(string account)
         {
-            List<Training> result2 = HttpPostClient.PostAsync<List<Training>>("Training", "List", account).Result;
-            return result2;
+            var result=this.TrainingLogSdk.TrainingList(account);
+            return result;
+            //List<Training> result2 = HttpPostClient.PostAsync<List<Training>>("Training", "List", account).Result;
+            //return result2;
         }
 
         public Training GetTrainingsDetailsFromTrainingLog(int trainingId)
@@ -47,7 +49,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             training.Calories = stTraining.EnergyConsumption;
             //  training.Comment = stTraining.Description;
             training.Distance = Convert.ToDecimal(stTraining.Distance);
-            training.Duration = stTraining.Duration.Seconds;
+            training.Duration = Convert.ToInt32(stTraining.Duration.TotalSeconds);
             training.Start = stTraining.StartDate;
             training.End = training.Start.AddSeconds(training.Duration);
             training.ExternalIdList = new Dictionary<string, string>();
