@@ -3,6 +3,7 @@ using ProductivityTools.TrainingLog.Contract;
 using ProductivityTools.TrainingLog.SDK;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 
@@ -41,7 +42,9 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             object result2 = HttpPostClient.PostAsync<object>("Training", address, null).Result;
         }
 
-        public void AddTraining(ProductivityTools.SportsTracker.SDK.Model.Training stTraining, string account)
+        public void AddTraining(string account, 
+            ProductivityTools.SportsTracker.SDK.Model.Training stTraining, 
+            List<ProductivityTools.SportsTracker.SDK.Model.TrainingImage> images)
         {
             Training training = new Training();
             training.Account = account;
@@ -58,7 +61,19 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             training.Source = "TrainingLog.SportsTracker.Cmdlet";
             var trainingMap = TrainingMapConfiguration.GetTraining(stTraining.TrainingType);
             training.Sport = trainingMap.TrainingLogTrainingType;
-            
+            training.ExternalIdList = new Dictionary<string, string>();
+            training.ExternalIdList.Add("SportsTracker", stTraining.WorkoutKey);
+
+            training.Pictures = new List<byte[]>();
+            foreach (var image in images)
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    image.Stream.CopyTo(ms);
+                    training.Pictures.Add(ms.ToArray());
+                }
+            }
+
             TrainingLogSdk.PostTraining(training);
         }
     }

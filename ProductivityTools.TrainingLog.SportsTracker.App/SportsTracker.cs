@@ -47,6 +47,12 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             return result;
         }
 
-      
+        public List<ProductivityTools.SportsTracker.SDK.Model.TrainingImage> GetTrainingPhotos(string trainingId)
+        {
+            List<ProductivityTools.SportsTracker.SDK.Model.TrainingImage> images = this.SportTrackerSdk.GetTrainingImages(trainingId);
+            return images;
+        }
+
+
     }
 }

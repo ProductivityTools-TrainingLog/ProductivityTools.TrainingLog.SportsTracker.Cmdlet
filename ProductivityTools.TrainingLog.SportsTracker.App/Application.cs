@@ -17,7 +17,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
         public Application(string trainingLogApiAddress, string sportTrackerLogin, string sportTrackerPassword)
         {
-            this.SportsTracker = new SportsTracker(sportTrackerLogin,sportTrackerPassword);
+            this.SportsTracker = new SportsTracker(sportTrackerLogin, sportTrackerPassword);
             this.TrainingLog = new TrainingLog(trainingLogApiAddress);
             //this.TrainingLogApiAddress = trainingLogApiAddress;
             //this.Login = sportTrackerLogin;
@@ -58,19 +58,18 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             var sportsTrackingTrainings = this.SportsTracker.GetSportsTrackerTrainings();
             var trainingLogTrainings = this.TrainingLog.GetTrainingsFromTrainingLog(account);
 
-            foreach(var sportsTrackingTraining in sportsTrackingTrainings)
+            foreach (ProductivityTools.SportsTracker.SDK.Model.Training sportsTrackingTraining in sportsTrackingTrainings)
             {
-                if (trainingLogTrainings.Any(x=>x.ExternalIdList.ContainsKey("SportsTracker") && x.ExternalIdList["SportsTracker"]==sportsTrackingTraining.WorkoutKey))
+                if (trainingLogTrainings.Any(x => x.ExternalIdList.ContainsKey("SportsTracker") && x.ExternalIdList["SportsTracker"] == sportsTrackingTraining.WorkoutKey))
                 {
                     Console.WriteLine("Training exists");
                 }
                 else
                 {
-                    this.TrainingLog.AddTraining(sportsTrackingTraining, account);
-
+                    var images = this.SportsTracker.GetTrainingPhotos(sportsTrackingTraining.WorkoutKey);
+                    this.TrainingLog.AddTraining(account, sportsTrackingTraining, images);
                 }
             }
-
         }
     }
 }
