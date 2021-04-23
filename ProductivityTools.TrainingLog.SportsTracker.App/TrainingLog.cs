@@ -21,12 +21,10 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             this.TrainingLogSdk = new SDK.TrainingLog(trainingLogApiAddress);
         }
 
-        public List<Training> GetTrainingsFromTrainingLog(string account)
+        public List<Training> GetTrainingsFromTrainingLog(string account, DateTime fromDate)
         {
-            var result=this.TrainingLogSdk.TrainingList(account);
+            var result = this.TrainingLogSdk.TrainingList(account, fromDate);
             return result;
-            //List<Training> result2 = HttpPostClient.PostAsync<List<Training>>("Training", "List", account).Result;
-            //return result2;
         }
 
         public Training GetTrainingsDetailsFromTrainingLog(int trainingId)
@@ -42,8 +40,8 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             object result2 = HttpPostClient.PostAsync<object>("Training", address, null).Result;
         }
 
-        public void AddTraining(string account, 
-            ProductivityTools.SportsTracker.SDK.Model.Training stTraining, 
+        public void AddTraining(string account,
+            ProductivityTools.SportsTracker.SDK.Model.Training stTraining,
             List<ProductivityTools.SportsTracker.SDK.Model.TrainingImage> images)
         {
             Training training = new Training();

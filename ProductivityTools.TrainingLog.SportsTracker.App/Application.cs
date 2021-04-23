@@ -36,10 +36,10 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         //}
 
 
-        public void ExportTrainingsToSportTracker(string account)
+        public void ExportTrainingsToSportTracker(string account, DateTime fromDate)
         {
-            var sportsTrackingTrainings = this.SportsTracker.GetSportsTrackerTrainings();
-            var trainingLogTrainings = this.TrainingLog.GetTrainingsFromTrainingLog(account);
+            var sportsTrackingTrainings = this.SportsTracker.GetSportsTrackerTrainings(fromDate);
+            var trainingLogTrainings = this.TrainingLog.GetTrainingsFromTrainingLog(account, fromDate);
 
 
             foreach (var training in trainingLogTrainings)
@@ -53,10 +53,10 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             }
         }
 
-        public void ImportTrainingsFromSportTracker(string account)
+        public void ImportTrainingsFromSportTracker(string account, DateTime fromDate)
         {
-            var sportsTrackingTrainings = this.SportsTracker.GetSportsTrackerTrainings();
-            var trainingLogTrainings = this.TrainingLog.GetTrainingsFromTrainingLog(account);
+            var sportsTrackingTrainings = this.SportsTracker.GetSportsTrackerTrainings(fromDate);
+            var trainingLogTrainings = this.TrainingLog.GetTrainingsFromTrainingLog(account, fromDate);
 
             foreach (ProductivityTools.SportsTracker.SDK.Model.Training sportsTrackingTraining in sportsTrackingTrainings)
             {

@@ -21,6 +21,8 @@ namespace ProductivityTools.TrainingLog.SportsTracker.ImportTrainingsFromSportsT
         [Parameter(Mandatory = false, HelpMessage = "TrainingLog API address")]
         public string TrainingLogApiAddress { get; set; }
 
+        [Parameter(Mandatory = false, HelpMessage = "Exports only trainings equals or later than date provided. If not set all trainings taken")]
+        public DateTime FromDate { get; set; }
 
         protected override void ProcessRecord()
         {

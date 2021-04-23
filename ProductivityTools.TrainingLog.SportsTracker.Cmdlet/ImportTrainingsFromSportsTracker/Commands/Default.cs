@@ -30,7 +30,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ImportTrainingsFrom
             ValidateEmpty(login, password, trainingLogApiAddress, account);
 
             Application application = new Application(trainingLogApiAddress, login, password);
-            application.ImportTrainingsFromSportTracker(account);
+            application.ImportTrainingsFromSportTracker(account, this.Cmdlet.FromDate);
         }
     }
 }

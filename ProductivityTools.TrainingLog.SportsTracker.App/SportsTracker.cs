@@ -7,27 +7,16 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 {
     class SportsTracker
     {
-        // ProductivityTools.SportsTracker.SDK.SportsTracker sportTrackerSdk;
         ProductivityTools.SportsTracker.SDK.SportsTracker SportTrackerSdk { get; set; }
-        //{
-        //    get
-        //    {
-        //        if (sportTrackerSdk == null)
-        //        {
-        //            sportTrackerSdk = new ProductivityTools.SportsTracker.SDK.SportsTracker(this.Login, this.Password);
-        //        }
-        //        return sportTrackerSdk;
-        //    }
-        //}
 
         public SportsTracker(string sportTrackerLogin, string sportTrackerPassword)
         {
             SportTrackerSdk = new ProductivityTools.SportsTracker.SDK.SportsTracker(sportTrackerLogin, sportTrackerPassword);
         }
 
-        public List<ProductivityTools.SportsTracker.SDK.Model.Training> GetSportsTrackerTrainings()
+        public List<ProductivityTools.SportsTracker.SDK.Model.Training> GetSportsTrackerTrainings(DateTime fromDate)
         {
-            var trainings = SportTrackerSdk.GetTrainingList();
+            var trainings = SportTrackerSdk.GetTrainingList(fromDate);
             return trainings;
         }
 
