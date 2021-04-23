@@ -8,10 +8,6 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 {
     public class Application
     {
-        //private readonly string TrainingLogApiAddress;
-        //private readonly string Login;
-        //private readonly string Password;
-
         private SportsTracker SportsTracker;
         private TrainingLog TrainingLog;
 
@@ -19,22 +15,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         {
             this.SportsTracker = new SportsTracker(sportTrackerLogin, sportTrackerPassword);
             this.TrainingLog = new TrainingLog(trainingLogApiAddress);
-            //this.TrainingLogApiAddress = trainingLogApiAddress;
-            //this.Login = sportTrackerLogin;
-            //this.Password = sportTrackerPassword;
         }
-
-
-        //private HttpPostClient HttpPostClient
-        //{
-        //    get
-        //    {
-        //        HttpPostClient client = new HttpPostClient(true);
-        //        client.SetBaseUrl(this.TrainingLogApiAddress);
-        //        return client;
-        //    }
-        //}
-
 
         public void ExportTrainingsToSportTracker(string account, DateTime fromDate)
         {
