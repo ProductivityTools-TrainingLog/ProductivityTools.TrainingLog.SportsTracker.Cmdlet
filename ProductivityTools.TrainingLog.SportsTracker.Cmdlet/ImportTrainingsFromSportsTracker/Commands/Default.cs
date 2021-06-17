@@ -29,7 +29,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ImportTrainingsFrom
 
             ValidateEmpty(login, password, trainingLogApiAddress, account);
 
-            Application application = new Application(trainingLogApiAddress, login, password);
+            Application application = new Application(trainingLogApiAddress, login, password, this.Cmdlet.VerboseSwitch);
             application.ImportTrainingsFromSportTracker(account, this.Cmdlet.FromDate);
         }
     }

@@ -26,8 +26,8 @@ namespace ProductivityTools.TrainingLog.SportsTracker.Cmdlet.ExportTrainingsToSp
             string account = this.Cmdlet.Account ?? Account;
 
             ValidateEmpty(login, password, trainingLogApiAddress, account);
-            this.Cmdlet.WriteOutput("Hello Default ");
-            Application application = new Application(trainingLogApiAddress, login, password);
+            this.Cmdlet.WriteVerbose("Hello Default");
+            Application application = new Application(trainingLogApiAddress, login, password, this.Cmdlet.VerboseSwitch);
             application.ExportTrainingsToSportTracker(account, this.Cmdlet.FromDate);
         }
 

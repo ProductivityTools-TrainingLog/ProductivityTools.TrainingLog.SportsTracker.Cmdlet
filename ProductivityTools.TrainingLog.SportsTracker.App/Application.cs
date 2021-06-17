@@ -11,17 +11,16 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         private SportsTracker SportsTracker;
         private TrainingLog TrainingLog;
 
-        public Application(string trainingLogApiAddress, string sportTrackerLogin, string sportTrackerPassword)
+        public Application(string trainingLogApiAddress, string sportTrackerLogin, string sportTrackerPassword, bool logging)
         {
-            this.SportsTracker = new SportsTracker(sportTrackerLogin, sportTrackerPassword);
-            this.TrainingLog = new TrainingLog(trainingLogApiAddress);
+            this.SportsTracker = new SportsTracker(sportTrackerLogin, sportTrackerPassword, logging);
+            this.TrainingLog = new TrainingLog(trainingLogApiAddress, logging);
         }
 
         public void ExportTrainingsToSportTracker(string account, DateTime fromDate)
         {
             var sportsTrackingTrainings = this.SportsTracker.GetSportsTrackerTrainings(fromDate);
             var trainingLogTrainings = this.TrainingLog.GetTrainingsFromTrainingLog(account, fromDate);
-
 
             foreach (var training in trainingLogTrainings)
             {
@@ -30,6 +29,11 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
                     var trainingDetails = this.TrainingLog.GetTrainingsDetailsFromTrainingLog(training.TrainingId);
                     var externalTrainingId = this.SportsTracker.PushTrainingsToSportsTracker(trainingDetails);
                     this.TrainingLog.UpdateExternalTrainingId(training.TrainingId, externalTrainingId);
+                    Console.WriteLine($"Training {training.TrainingId} not exists in SportTracker - training added");
+                }
+                else
+                {
+                    Console.WriteLine($"Training {training.TrainingId} already exists in SportTracker - skipping");
                 }
             }
         }
@@ -43,12 +47,14 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             {
                 if (trainingLogTrainings.Any(x => x.ExternalIdList.ContainsKey("SportsTracker") && x.ExternalIdList["SportsTracker"] == sportsTrackingTraining.WorkoutKey))
                 {
-                    Console.WriteLine("Training exists");
+                    Console.WriteLine($"Training {sportsTrackingTraining.WorkoutKey} already exists in TrainingLog - skipping");
                 }
                 else
                 {
+                    var gpx = this.SportsTracker.GetGpx(sportsTrackingTraining.WorkoutKey);
                     var images = this.SportsTracker.GetTrainingPhotos(sportsTrackingTraining.WorkoutKey);
-                    this.TrainingLog.AddTraining(account, sportsTrackingTraining, images);
+                    this.TrainingLog.AddTraining(account, sportsTrackingTraining, images, gpx);
+                    Console.WriteLine($"Training {sportsTrackingTraining.WorkoutKey} is missing from TrainingLog - added");
                 }
             }
         }

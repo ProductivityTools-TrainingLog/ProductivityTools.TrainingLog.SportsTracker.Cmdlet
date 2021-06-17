@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace ProductivityTools.TrainingLog.SportsTracker
 {
-    [Cmdlet("Export","TrainingsToSportTracker")]
+    [Cmdlet("Export","TrainingsToSportTrackerFromTrainingLog")]
     public class ExportTrainingsToSportsTrackerCmdlet : ProductivityTools.PSCmdlet.PSCmdletPT
     {
         [Parameter(Mandatory = false, HelpMessage = "Login to SportsTracker website")]

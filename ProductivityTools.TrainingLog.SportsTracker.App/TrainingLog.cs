@@ -14,11 +14,11 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         private HttpPostClient HttpPostClient { get; set; }
         private ProductivityTools.TrainingLog.SDK.TrainingLog TrainingLogSdk { get; set; }
 
-        public TrainingLog(string trainingLogApiAddress)
+        public TrainingLog(string trainingLogApiAddress, bool logging)
         {
-            this.HttpPostClient = new HttpPostClient(true);
+            this.HttpPostClient = new HttpPostClient(logging);
             this.HttpPostClient.SetBaseUrl(trainingLogApiAddress);
-            this.TrainingLogSdk = new SDK.TrainingLog(trainingLogApiAddress);
+            this.TrainingLogSdk = new SDK.TrainingLog(trainingLogApiAddress, logging);
         }
 
         public List<Training> GetTrainingsFromTrainingLog(string account, DateTime fromDate)
@@ -42,7 +42,8 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
         public void AddTraining(string account,
             ProductivityTools.SportsTracker.SDK.Model.Training stTraining,
-            List<ProductivityTools.SportsTracker.SDK.Model.TrainingImage> images)
+            List<ProductivityTools.SportsTracker.SDK.Model.TrainingImage> images,
+            Stream gpx)
         {
             Training training = new Training();
             training.Account = account;
@@ -69,6 +70,15 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
                 {
                     image.Stream.CopyTo(ms);
                     training.Pictures.Add(ms.ToArray());
+                }
+            }
+
+            if (gpx!=null)
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    gpx.CopyTo(ms);
+                    training.Gpx = ms.ToArray();
                 }
             }
 

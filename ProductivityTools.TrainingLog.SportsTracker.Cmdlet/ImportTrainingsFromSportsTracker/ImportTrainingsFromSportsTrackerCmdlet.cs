@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ProductivityTools.TrainingLog.SportsTracker.ImportTrainingsFromSportsTracker
 {
-    [Cmdlet("Import", "TrainingsFromSportTracker")]
+    [Cmdlet("Import", "TrainingsFromSportTrackerToTrainingLog")]
     public class ImportTrainingsFromSportsTrackerCmdlet : ProductivityTools.PSCmdlet.PSCmdletPT
     {
         [Parameter(Mandatory = false, HelpMessage = "Login to SportsTracker website")]

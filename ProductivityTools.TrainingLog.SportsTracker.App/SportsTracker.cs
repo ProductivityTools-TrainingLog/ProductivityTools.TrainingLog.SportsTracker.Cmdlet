@@ -2,6 +2,7 @@
 using ProductivityTools.TrainingLog.Contract;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 namespace ProductivityTools.TrainingLog.SportsTracker.App
 {
@@ -9,9 +10,9 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
     {
         ProductivityTools.SportsTracker.SDK.SportsTracker SportTrackerSdk { get; set; }
 
-        public SportsTracker(string sportTrackerLogin, string sportTrackerPassword)
+        public SportsTracker(string sportTrackerLogin, string sportTrackerPassword, bool logging)
         {
-            SportTrackerSdk = new ProductivityTools.SportsTracker.SDK.SportsTracker(sportTrackerLogin, sportTrackerPassword);
+            SportTrackerSdk = new ProductivityTools.SportsTracker.SDK.SportsTracker(sportTrackerLogin, sportTrackerPassword, logging);
         }
 
         public List<ProductivityTools.SportsTracker.SDK.Model.Training> GetSportsTrackerTrainings(DateTime fromDate)
@@ -31,7 +32,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             sdkTraining.Description = $"{trainingMap.Name} {training.Name}";
             sdkTraining.EnergyConsumption = Convert.ToInt32(training.Calories);
             sdkTraining.SharingFlags = 19;
-
+            //7675
             var result = this.SportTrackerSdk.AddTraining(sdkTraining, training.Gpx, training.Pictures);
             return result;
         }
@@ -40,6 +41,12 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         {
             List<ProductivityTools.SportsTracker.SDK.Model.TrainingImage> images = this.SportTrackerSdk.GetTrainingImages(trainingId);
             return images;
+        }
+
+        public System.IO.Stream GetGpx(string workoutId)
+        {
+            var r = this.SportTrackerSdk.GetGpx(workoutId);
+            return r;
         }
 
 
