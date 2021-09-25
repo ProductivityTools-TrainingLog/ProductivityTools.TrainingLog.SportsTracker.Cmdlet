@@ -18,7 +18,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
         {
             this.HttpPostClient = new HttpPostClient(true);
             this.HttpPostClient.SetBaseUrl(trainingLogApiAddress);
-            this.TrainingLogSdk = new SDK.TrainingLog(trainingLogApiAddress);
+            this.TrainingLogSdk = new SDK.TrainingLog(trainingLogApiAddress, true);
         }
 
         public List<Training> GetTrainingsFromTrainingLog(string account, DateTime fromDate)
@@ -42,6 +42,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
 
         public void AddTraining(string account,
             ProductivityTools.SportsTracker.SDK.Model.Training stTraining,
+            byte[] gpx,
             List<ProductivityTools.SportsTracker.SDK.Model.TrainingImage> images)
         {
             Training training = new Training();
@@ -59,8 +60,11 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             training.Source = "TrainingLog.SportsTracker.Cmdlet";
             var trainingMap = TrainingMapConfiguration.GetTraining(stTraining.TrainingType);
             training.Sport = trainingMap.TrainingLogTrainingType;
+            training.AverageSpeed = stTraining.AverageSpeed;
             training.ExternalIdList = new Dictionary<string, string>();
             training.ExternalIdList.Add("SportsTracker", stTraining.WorkoutKey);
+
+            training.Gpx = gpx;
 
             training.Pictures = new List<byte[]>();
             foreach (var image in images)

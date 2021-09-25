@@ -48,7 +48,8 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
                 else
                 {
                     var images = this.SportsTracker.GetTrainingPhotos(sportsTrackingTraining.WorkoutKey);
-                    this.TrainingLog.AddTraining(account, sportsTrackingTraining, images);
+                    byte[] gpx = this.SportsTracker.GetTrainingGpx(sportsTrackingTraining.WorkoutKey);
+                    this.TrainingLog.AddTraining(account, sportsTrackingTraining, gpx, images);
                 }
             }
         }

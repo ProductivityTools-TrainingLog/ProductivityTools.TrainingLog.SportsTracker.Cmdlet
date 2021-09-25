@@ -2,6 +2,7 @@
 using ProductivityTools.TrainingLog.Contract;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 namespace ProductivityTools.TrainingLog.SportsTracker.App
 {
@@ -30,6 +31,7 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             sdkTraining.Duration = TimeSpan.FromSeconds(training.Duration);
             sdkTraining.Description = $"{trainingMap.Name} {training.Name}";
             sdkTraining.EnergyConsumption = Convert.ToInt32(training.Calories);
+            Console.WriteLine(sdkTraining.EnergyConsumption);
             sdkTraining.SharingFlags = 19;
 
             var result = this.SportTrackerSdk.AddTraining(sdkTraining, training.Gpx, training.Pictures);
@@ -42,6 +44,21 @@ namespace ProductivityTools.TrainingLog.SportsTracker.App
             return images;
         }
 
+        public byte[] GetTrainingGpx(string trainingId)
+        {
+            Stream r = this.SportTrackerSdk.GetGpx(trainingId);
+            byte[] br = ReadFully(r);
+            return br;
+        }
+
+        public static byte[] ReadFully(Stream input)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                input.CopyTo(ms);
+                return ms.ToArray();
+            }
+        }
 
     }
 }
